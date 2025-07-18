@@ -5,6 +5,7 @@ CREATE DATABASE book_rental_api;
 CREATE TABLE users (
     id SERIAL PRIMARY KEY,
     name TEXT NOT NULL,
+    password TEXT NOT NULL,
     email TEXT UNIQUE NOT NULL,
     role TEXT NOT NULL CHECK (role IN ('admin', 'user')) DEFAULT 'user'
 );

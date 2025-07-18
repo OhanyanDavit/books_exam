@@ -1,15 +1,28 @@
 const express = require('express');
+const cors = require('cors');
+require('dotenv').config();
+
 const app = express();
-const bookRoutes = require('./routes/bookRoutes');
+
+// Middlewares
+app.use(cors());
+app.use(express.json());
+
+// Routes
+const authRoutes = require('./routes/authRoutes');
 const userRoutes = require('./routes/userRoutes');
+const bookRoutes = require('./routes/bookRoutes');
 const rentalRoutes = require('./routes/rentalRoutes');
 const maintenanceRoutes = require('./routes/maintenanceRoutes');
 
-app.use(express.json());
+app.use('/api/auth', authRoutes);
+app.use('/api/users', userRoutes);
+app.use('/api/books', bookRoutes);
+app.use('/api/rentals', rentalRoutes);
+app.use('/api/maintenance', maintenanceRoutes);
 
-app.use('/books', bookRoutes);
-app.use('/users', userRoutes);
-app.use('/rentals', rentalRoutes);
-app.use('/maintenance', maintenanceRoutes);
+app.get('/', (req, res) => {
+  res.send('📚 Book Rental API is running...');
+});
 
-module.exports = { app };
+module.exports = app;
